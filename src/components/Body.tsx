@@ -1,12 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Browse from "./Browse"
 import Login from "./Login"
 
 const Body = () => {
   return (
-    <div>
-        <Login />
-        <Browse />
-    </div>
+   <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/browse" element={<Browse />}></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

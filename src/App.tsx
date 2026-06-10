@@ -1,13 +1,16 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Body from "./components/Body";
+import Browse from "./components/Browse";
 
 function App() {
   return (
-    <>
-      <h1 className="text-2xl font-bold text-amber-300">
-        aap sabhi ka swagat h cinema ghar mei! Namaste
-      </h1>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Body />}></Route>
+        <Route path="/browse" element={<Browse />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

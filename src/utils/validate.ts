@@ -6,8 +6,7 @@ export const checkValidData = (email: string, password: string) => {
   );
 
   // custom error messages
-  if (!validEmail) return "Email Id is not valid!";
-  if (!validPass) return "Password is not valid!";
-
+  if (!validEmail || !validPass) return "Email Id or Password is not valid!";
+  
   return null;
 };

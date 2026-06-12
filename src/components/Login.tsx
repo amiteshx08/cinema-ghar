@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/validate";
 
 const login = () => {
+  // state variable for sign in and sign up form
   const [signIn, setSignIn] = useState(true);
 
+  // state variable for error message
+  const [errMsg, setErrMsg] = useState<string|null>("");
+
+  // useRef variables for validation purposes
+  const email = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
+
+  // function for validation
+  const handleButtonClick = () => {
+    const msg = checkValidData(email.current!.value, password.current!.value);
+    setErrMsg(msg)
+  };
+
+  // function for form toggle
   const toggleSignIn = () => {
     setSignIn(!signIn);
   };
+
   return (
     <div>
       <Header />
@@ -17,38 +34,51 @@ const login = () => {
         />
       </div>
 
-      <form className="absolute bg-black p-10 w-96.25 my-36 mx-auto right-0 left-0 text-white font-['Roboto'] opacity-88">
+      {/* sign in/up form */}
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="absolute bg-black p-10 w-96.25 my-36 mx-auto right-0 left-0 text-white font-['Roboto'] opacity-88"
+      >
         <h1 className="mx-auto my-3 text-[35px] font-bold">
           {signIn ? "Sign In" : "Sign Up"}
         </h1>
+        <p className="text-red-500 font-bold">{errMsg}</p>
         {!signIn && (
           <input
             className="p-3.5 mx-auto my-3.5 w-full bg-gray-700 rounded-xs focus: outline-none"
             type="text"
-            placeholder="Username or Phone Number"
+            placeholder="Full Name"
           />
         )}
 
         <input
+          ref={email}
           className="p-3.5 mx-auto my-3.5 w-full bg-gray-700 rounded-xs focus: outline-none"
-          type="text"
+          type="email"
           placeholder="Email"
+          required
         />
         <input
+          ref={password}
           className="p-3.5 mx-auto my-3.5 w-full bg-gray-700 rounded-xs focus: outline-none"
-          type="text"
+          type="password"
           placeholder="Password"
+          required
         />
-        <button className="p-3.5 mx-auto mt-3.5 w-full bg-red-700 cursor-pointer rounded-xs">
+        <button
+          className="p-3.5 mx-auto mt-3.5 w-full bg-red-700 cursor-pointer rounded-xs"
+          formNoValidate
+          onClick={handleButtonClick}
+        >
           Sign In
         </button>
-        <p className="mx-auto my-2.5 ">
-          {signIn ? "New to here?" : "Already have an account?"}{" "}
+        <p className="mx-auto my-2.5">
+          {signIn ? "New to Netflix?" : "Already have an account?"}{" "}
           <span
             className="cursor-pointer text-decoration-line: underline"
             onClick={toggleSignIn}
           >
-            {signIn ? "Sign up now" : "Sign In"}
+            {signIn ? "Sign up" : "Sign In"}
           </span>
         </p>
       </form>
